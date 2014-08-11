@@ -56,6 +56,13 @@ describe("Register", function(){
       done();
     });
   });
+
+   it ("fails", function(done){
+    requester.post("/register", {  login : 'ben' }, function(err, res){
+      assert.equal(400, res.statusCode);
+      done();
+    });
+  });
 });
 
 describe("Authentication", function(){
