@@ -9,7 +9,7 @@ var fs        = require('fs')
   , Sequelize = require('sequelize')
   , lodash    = require('lodash')
   , db        = {}
-  , sequelize = new Sequelize(getConfig().database, getConfig().username, getConfig().password, {
+  , sequelize = new Sequelize(getConfig(), {
     dialect : 'postgres',
     protocol : 'postgres',
     logging : false,
