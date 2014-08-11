@@ -74,6 +74,8 @@ describe("Info", function(){
     requester.getAuth("ben", "foobar", "/info", function(err, res){
       assert.equal(200, res.statusCode);
       assert.equal(true, JSON.parse(res.body).success);
+      assert.equal('ben', JSON.parse(res.body).login);
+      assert.equal(0, JSON.parse(res.body).models.length);
       done();
     });
   });

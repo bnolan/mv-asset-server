@@ -89,7 +89,7 @@ app.get('/info', passport.authenticate('basic', { session: false }), function(re
   db.Model
     .findAll({ where : { user_id : req.user.id }})
     .complete(function(err, models){
-      res.json({ success : true, user : req.user.login, models : models });
+      res.json({ success : true, login : req.user.login, models : models });
     });
 });
 
