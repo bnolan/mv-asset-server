@@ -1,13 +1,7 @@
 // model loading from http://sequelizejs.com/articles/express
 
-function getDatabase(){
-  if(process.env.NODE_ENV=='production'){
-    return 'metaverse-prod'
-  }else if (process.env.NODE_ENV=='test'){
-    return 'metaverse-test'
-  }else{
-    return 'metaverse-dev'
-  }
+function getConfig(){
+  return require("../config/database.json")[process.env.NODE_ENV];
 }
 
 var fs        = require('fs')
@@ -15,7 +9,7 @@ var fs        = require('fs')
   , Sequelize = require('sequelize')
   , lodash    = require('lodash')
   , db        = {}
-  , sequelize = new Sequelize(getDatabase(), 'ben', 'test', {
+  , sequelize = new Sequelize(getConfig().database, getConfig().username, getConfig().password, {
     dialect : 'postgres',
     protocol : 'postgres',
     logging : false,
