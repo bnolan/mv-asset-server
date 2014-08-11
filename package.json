@@ -1,23 +1,29 @@
 {
   "name": "mv-asset-server",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "dependencies": {
-    "express": "*",
-    "connect": "*",
+    "express": "4.8.2",
+    "connect": "3.1.0",
     "three": "0.66.2",
-    "connect-multiparty": "*",
-    "orm": "2.1.8",
+    "connect-multiparty": "1.2.1",
     "pg": "~3.0.3",
     "sequelize": "~1.7.9",
     "mkdirp": "~0.5.0",
     "request": "~2.37.0",
-    "glob": "~4.0.4"
+    "glob": "~4.0.4",
+    "cors": "~2.4.1",
+    "passport-http": "~0.2.2",
+    "bcrypt": "~0.8.0",
+    "lodash": "~2.4.1",
+    "method-override": "~2.1.3",
+    "passport": "~0.2.0",
+    "body-parser": "~1.6.3"
   },
   "devDependencies": {
     "jasmine-node": "1.14.3"
   },
   "scripts": {
-    "start": "coffee asset-server.coffee",
-    "test": "jasmine-node --coffee spec/*_spec.coffee"
+    "start": "NODE_ENV=development node asset-server.js",
+    "test": "NODE_ENV=test mocha spec/*_spec.js"
   }
 }
