@@ -10,13 +10,14 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 var db = require("./models");
 var packageJson = require('./package.json');
+var Upload = require("./lib/upload");
 
-app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(cors());
+app.options('*', cors());
 app.use(bodyParser());
 app.use(methodOverride());
-//app.options('*', cors());
+app.use(express.static('public'));
 
 // Configure express
 // Allow all cross-origin requests
