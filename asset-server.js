@@ -77,7 +77,15 @@ app.get('/', function(req, res) {
   res.json({ success : true, message: 'Welcome to the asset server', version : packageJson.version }); 
 });
 
-app.get('/details', passport.authenticate('basic', { session: false }), function(req, res){
+app.get('/stats', function(req, res) {
+  db.User.findAll().complete(function(err, users){
+    db.Model.findAll().complete(function(err, models){
+      res.json({ success : true, userCount : users.length, modelCount : models.length }); 
+    })
+  })
+});
+
+app.get('/info', passport.authenticate('basic', { session: false }), function(req, res){
   db.Model
     .findAll({ where : { user_id : req.user.id }})
     .complete(function(err, models){
