@@ -46,6 +46,18 @@ describe("Stats", function(){
   });
 });
 
+describe("Register", function(){
+   it ("is successful", function(done){
+    requester.post("/register", {  login : 'goat', password : 'foobar' }, function(err, res){
+      assert.equal(200, res.statusCode);
+      assert.equal(true, JSON.parse(res.body).success);
+      assert.equal('goat', JSON.parse(res.body).login);
+      assert.equal(0, JSON.parse(res.body).models.length);
+      done();
+    });
+  });
+});
+
 describe("Authentication", function(){
    it ("requires basic auth", function(done){
     requester.get("/info", function(err, res){

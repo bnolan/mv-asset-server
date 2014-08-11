@@ -17,7 +17,7 @@ Requester.prototype.getAuth = function(user, pass, path, callback){
 }
 
 Requester.prototype.post = function(path, body, callback){
-  request.post({url: "http://localhost:" + port + path, body: body}, callback)
+  request.post({url: "http://localhost:" + port + path, form: body}, callback)
 }
 
 module.exports = function(callback){

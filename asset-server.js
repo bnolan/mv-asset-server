@@ -1,45 +1,7 @@
-/*
-
-// BASE SETUP
-// =============================================================================
-
-// call the packages we need
-var express    = require('express');    // call express
-var app        = express();         // define our app using express
-var bodyParser = require('body-parser');
-
-// configure app to use bodyParser()
-// this will let us get the data from a POST
-app.use(bodyParser());
-
-var port = process.env.PORT || 8080;    // set our port
-
-// ROUTES FOR OUR API
-// =============================================================================
-//var router = express.Router();        // get an instance of the express Router
-
-// test route to make sure everything is working (accessed at GET http://localhost:8080/api)
-app.get('/', function(req, res) {
-  res.json({ message: 'hooray! welcome to our api!' }); 
-});
-
-// more routes for our API will happen here
-
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-//app.use('/api', router);
-
-// START THE SERVER
-// =============================================================================
-app.listen(port);
-console.log('Magic happens on port ' + port);
-
-*/
-
-// var connect = require('connect')
-// var methodOverride = require("method-override");
 
 var express = require('express');
+var bodyParser = require('body-parser');
+var methodOverride = require("method-override");
 var app = express();
 var passport = require('passport')
 var BasicStrategy = require('passport-http').BasicStrategy;
@@ -52,13 +14,13 @@ var packageJson = require('./package.json');
 app.use(express.static('public'));
 app.use(passport.initialize());
 app.use(cors());
+app.use(bodyParser());
+app.use(methodOverride());
 //app.options('*', cors());
 
 // Configure express
-// app.use(connect.urlencoded());
 // Allow all cross-origin requests
 // app.use(connect.json());
-// app.use(methodOverride());
 
 passport.use(new BasicStrategy(
   function(username, password, done) {
@@ -83,6 +45,22 @@ app.get('/stats', function(req, res) {
       res.json({ success : true, userCount : users.length, modelCount : models.length }); 
     })
   })
+});
+
+app.post('/register', multipartMiddleware, function(req, res) {
+  db.User.create({
+    login: req.body.login
+  }).complete(function(err, u){
+    if(err){
+      res.status(400).json( { success : false });
+      return;
+    }
+
+    u.setPassword(req.body.password);
+    u.save().complete(function(err){
+      res.json({ success : true, login : u.login, models : [] });
+    });
+  });
 });
 
 app.get('/info', passport.authenticate('basic', { session: false }), function(req, res){
